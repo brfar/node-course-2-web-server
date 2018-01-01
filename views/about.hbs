@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Help Page</title>
+    <title>Some Website</title>
 </head>
 <body>
+    {{!-- we injected a pageTitle variable to this page, but this variable doesn't exist here
+    BUT it does exist on the header.hbs page which is where it's gonna get injected! --}}
 	{{> header}}
 	<p>Some text here.</p>
 
+    {{!-- vv that is the syntax for injecting templates --}}
     {{> footer}}
 </body>
 </html>

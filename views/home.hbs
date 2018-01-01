@@ -8,8 +8,11 @@
 </head>
 <body>
 	{{> header}}
-	<p> {{screamIt welcomeMessage}} </p>
 
+    {{!-- in order to pass data into one of our helpers, we first have to reference the helper by name, 
+    'screamIt' in this case, then after a space we can specify whatever data we wanna pass in as arguments --}}
+	<p> {{screamIt welcomeMessage}} </p>
+    {{!-- welcomeMessage was specified no server.js so it'll be injected here. --}}
     {{> footer}}
 </body>
 </html>
