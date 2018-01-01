@@ -13,19 +13,31 @@ const app = express();
 hbs.registerPartials(`${__dirname}/views/partials`);
 app.set('view engine', 'hbs'); // lets express know which view engine we wanna use
 
+/* app.use is how you register middleware and it takes a function, that takes 3 arguments. req and res
+we already know, but 'next' exists so you can tell express when your middleware function is done. This
+is useful because you can have as many middleware as you like registered to a single express app. 
+If your middleware doesn't call next(), your handlers for each requests are never gonna fire. */
 app.use((req, res, next) => {
   const now = new Date().toString();
   const log = `${now}: ${req.method} ${req.url}`;
   console.log(log);
+  /* appendFile lets you add on to a file. It takes 3 arguments: the file name, the thing you wanna add 
+  and a callback function to handle errors. */
   fs.appendFile('server.log', `${log}\n`, (err) => {
     if (err) console.log('unable to append to server.log');
   });
   next();
 });
 
-// app.use((req, res, next) => {
-//   res.render('maintenance.hbs');
-// });
+/* This is an example of a middleware that intentionally don't use next(). This is a maintenance page,
+so the rest of the website is not supposed to work, this middleware take care of it. 
+REMEMBER: node work in order of calls. So this should be at the very top of the app, to prevent other
+files to be accessible.
+
+app.use((req, res, next) => {
+  res.render('maintenance.hbs');
+});
+*/
 
 /* A middleware lets you configure how your express application works. You can think of it kind of like
 a third party add-on. You're saying "hey, express usually work like this. I'd like you to tweak a lil bit
